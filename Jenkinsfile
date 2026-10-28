@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Replace with your GitHub repo URL
-                git branch: 'main', url: 'https://github.com/YOUR_GITHUB_USER/dental-clinic.git'
+                
+                git branch: 'main', url: 'https://github.com/MurtazaSajid/dental-clinic.git'
             }
         }
 
