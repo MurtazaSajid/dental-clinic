@@ -1,0 +1,34 @@
+# PART I: deployed from the image pushed to Docker Hub
+# Replace YOUR_DOCKERHUB_USER before running.
+services:
+  db:
+    image: mysql:8.0
+    container_name: dental_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: dentaldb
+    volumes:
+      - dental_db_data:/var/lib/mysql     # persistent volume
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpass"]
+      interval: 5s
+      retries: 20
+
+  web:
+    image: YOUR_DOCKERHUB_USER/dental-clinic:1.0
+    container_name: dental_web
+    restart: always
+    ports:
+      - "80:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: rootpass
+      DB_NAME: dentaldb
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  dental_db_data:

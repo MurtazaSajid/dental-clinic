@@ -1,0 +1,36 @@
+# PART II: used by Jenkins. Code mounted as a volume (no Dockerfile),
+# different container names and ports from Part I.
+services:
+  db:
+    image: mysql:8.0
+    container_name: ci_dental_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: dentaldb
+    volumes:
+      - ci_dental_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpass"]
+      interval: 5s
+      retries: 20
+
+  web:
+    image: python:3.11-slim
+    container_name: ci_dental_web
+    working_dir: /app
+    volumes:
+      - ./:/app                          # code attached as a volume
+    command: sh -c "pip install --no-cache-dir -r requirements.txt && python app.py"
+    ports:
+      - "8081:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: rootpass
+      DB_NAME: dentaldb
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  ci_dental_db_data:

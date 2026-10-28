@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Healthy teeth,<br>confident smile.</h1>
+      <p>Gentle, modern dental care for the whole family. Book your visit online in under a minute.</p>
+      <a class="btn" href="/book">Book an Appointment</a>
+    </div>
+    <div class="hero-art">🦷</div>
+  </div>
+</section>
+
+<section class="stats wrap">
+  <div><b>15+</b><span>Years experience</span></div>
+  <div><b>10k+</b><span>Happy patients</span></div>
+  <div><b>6</b><span>Expert dentists</span></div>
+</section>
+
+<section id="services" class="wrap">
+  <h2>Our Services</h2>
+  <div class="grid">
+    {% for name, desc, icon in services %}
+    <div class="card"><div class="icon">{{ icon }}</div><h3>{{ name }}</h3><p>{{ desc }}</p></div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap"><h2>Ready for your best smile?</h2><a class="btn light" href="/book">Book Now</a></div>
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wrap">
+  <h2>Appointments <span class="muted">({{ rows|length }})</span></h2>
+  {% if rows %}
+  <div class="scroll"><table>
+    <tr><th>#</th><th>Patient</th><th>Phone</th><th>Service</th><th>Date</th><th>Time</th><th></th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.id }}</td><td>{{ r.patient_name }}</td><td>{{ r.phone }}</td>
+      <td>{{ r.service }}</td><td>{{ r.appt_date }}</td><td>{{ r.appt_time }}</td>
+      <td><form method="post" action="/appointments/{{ r.id }}/delete"><button class="del">Delete</button></form></td>
+    </tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p>No appointments yet. <a href="/book">Book the first one.</a></p>{% endif %}
+</section>
+{% endblock %}
