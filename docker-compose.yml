@@ -1,5 +1,4 @@
-# PART I: deployed from the image pushed to Docker Hub
-# Replace YOUR_DOCKERHUB_USER before running.
+
 services:
   db:
     image: mysql:8.0
@@ -16,7 +15,7 @@ services:
       retries: 20
 
   web:
-    image: YOUR_DOCKERHUB_USER/dental-clinic:1.0
+    image: murtazasajid/dental-clinic:1.0
     container_name: dental_web
     restart: always
     ports:
